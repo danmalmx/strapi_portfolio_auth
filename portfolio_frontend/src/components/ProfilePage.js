@@ -3,17 +3,24 @@ import axios from 'axios';
 import { handleChange } from '../utils/inputs'
 import { API_URL } from '../utils/urls'
 
-export class ProfilePage extends Component {
+class ProfilePage extends Component {
   constructor(props) {
     super(props)
 
-    this.handleChange = handleChange.bind(this);
-
     this.state =  {
-        bio: 'The Bio',
-        oneLiner: 'Hasta la vista baby',
-        handleChange
-      }
+      bio: 'The Bio',
+      oneLiner: 'Hasta la vista baby',
+      handleChange
+    }
+
+    this.handleChange = handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    console.log('this.props.user', this.props.user);
+    const { bio, favorite_one_liner } = this.props.user.user;
+    this.setState({bio, oneLiner: favorite_one_liner});
+
   }
 
   handleSubmit = async (event) => {
@@ -42,29 +49,23 @@ export class ProfilePage extends Component {
 
   }
 
-  componentDidMount() {
-    console.log('this.props.use', this.props.user);
-
-    const { bio, favorite_one_liner } = this.props.user.user;
-
-    this.setState({bio, oneLiner: favorite_one_liner});
-
-  }
   render() {
     const { bio, oneLiner} = this.state;
 
     return (
       <div className="ProfilePage">
         Profile Page
-        <div>
-          <label htmlFor="bio">Bio</label>
-          <input type="text" name="bio" value={bio} onChange={this.handleChange} />
-        </div>
-        <div>
-          <label htmlFor="oneLiner">One Liner</label>
-          <input type="text" name="oneLiner" value={oneLiner} onChange={this.handleChange}/>
-        </div>
-        <button type="submit" onClick={this.handleSubmit}>Update your profile</button>
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <label htmlFor="bio">Bio</label>
+            <input type="text" name="bio" id="bio" value={bio} onChange={this.handleChange} />
+          </div>
+          <div>
+            <label htmlFor="oneLiner">One Liner</label>
+            <input type="text" name="oneLiner" id="oneLiner" value={oneLiner} onChange={this.handleChange}/>
+          </div>
+          <button type="submit">Update your profile</button>
+        </form>
       </div>
     )
   }

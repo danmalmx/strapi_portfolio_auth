@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {handleChange} from '../utils/inputs'
 
-export class ResgisterOrLogin extends Component {
+class ResgisterOrLogin extends Component {
   constructor(props) {
     super(props)
 
@@ -19,10 +19,10 @@ export class ResgisterOrLogin extends Component {
     const { email, password, mode } = this.state;
 
     const data = {
-      identifier: email,
       email,
       password,
-      username: email
+      username: email,
+      identifier: email,
     }
 
     let url = '';
@@ -64,10 +64,10 @@ export class ResgisterOrLogin extends Component {
           <button type="submit">{mode}</button>
         </form>
         {mode === 'login' &&
-          <p className="toggle" onClick={() => this.setState({mode: 'signup'})}>Want to sign up instead</p>
+          <p className="toggle" onClick={() => this.setState({mode: 'signup'})}><button>Want to sign up instead</button></p>
         }
         {mode === 'signup' &&
-          <p className="toggle" onClick={() => this.setState({mode: 'login'})}>Want to log in instead?</p>
+          <p className="toggle" onClick={() => this.setState({mode: 'login'})}><button>Want to log in instead?</button></p>
         }
       </div>
     )
