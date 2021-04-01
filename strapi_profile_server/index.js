@@ -29,7 +29,7 @@ app.post('/api/auth/local', async (req, res) => {
   const data = {user};
   res.send(data);
 });
-app.post('/api/auth/local/register', (req, res) => {
+app.post('/api/auth/local/register', async (req, res) => {
 
   const signupRes = await axios({
     method: 'POST',
