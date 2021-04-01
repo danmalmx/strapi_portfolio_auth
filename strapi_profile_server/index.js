@@ -30,7 +30,18 @@ app.post('/api/auth/local', async (req, res) => {
   res.send(data);
 });
 app.post('/api/auth/local/register', (req, res) => {
-  console.log('POST /api/auth/local/register req.body', req.body);
+
+  const signupRes = await axios({
+    method: 'POST',
+    url: `${API_URL}/auth/local/register`,
+    data: req.body,
+  });
+
+  const { jwt, user} = signupRes.data;
+  req.session.jwt = jwt;
+
+  const data = { user };
+  res.send(data);
 });
 
 app.get('/api/hi', (req, res) => {
