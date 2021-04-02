@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 import './App.css';
 
 import ResgisterOrLogin from './components/ResgisterOrLogin'
@@ -8,6 +9,16 @@ import ProfilePage from './components/ProfilePage'
 class App extends Component {
   state = {
     user: null,
+  }
+
+  async componentDidMount() {
+    const userRes = await axios({
+      method: 'GET',
+      url: `/users/me`
+    })
+    if(userRes.data) {
+      this.setState({user: {user: userRes.data}})
+    }
   }
   render () {
     const { user } = this.state;

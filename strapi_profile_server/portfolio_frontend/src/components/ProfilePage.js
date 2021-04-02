@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { handleChange } from '../utils/inputs'
-import { API_URL } from '../utils/urls'
-
 class ProfilePage extends Component {
   constructor(props) {
     super(props)
@@ -20,7 +18,6 @@ class ProfilePage extends Component {
     console.log('this.props.user', this.props.user);
     const { bio, favorite_one_liner } = this.props.user.user;
     this.setState({bio, oneLiner: favorite_one_liner});
-
   }
 
   handleSubmit = async (event) => {
@@ -34,19 +31,14 @@ class ProfilePage extends Component {
     }
 
     const userId = this.props.user.user.id;
-    const jwtToken = this.props.user.jwt;
 
     const updateUserRes = await axios({
       method: 'PUT',
-      url: `${API_URL}/users/${userId}`,
-      data,
-      headers: {
-        Authorization: `Bearer ${jwtToken}`
-      }
+      url: `/users/${userId}`,
+      data
     })
 
     console.log('updateUserRes', updateUserRes);
-
   }
 
   render() {

@@ -48,6 +48,37 @@ app.get('/api/hi', (req, res) => {
   console.log('req.session.jwt', req.session.jwt);
 });
 
+app.put('/users/:userId', async (req, res) => {
+  const jwtToken = req.session.jwt;
+  const data = req.body;
+  const { userId } = req.params;
+
+  console.log('PUT /users/:userId');
+  console.log('jwtToken', jwtToken);
+  console.log('data', data);
+  console.log('userId', userId);
+
+  const updateUserRes = await axios({
+    method: 'PUT',
+    url: `${API_URL}/users/${userId}`,
+    data,
+    headers: {
+      Authorization: `Bearer ${jwtToken}`
+    }
+  })
+});
+
+app.get('/users/me', async (req, res) => {
+  const { jwt } = req.session;
+  const meRes = await axios({
+    method: 'GET',
+    url: `${API_URL}/users/me`,
+    headers: {
+      Authorization: `Bearer ${jwt}`
+    }
+  })
+  res.send(meRes.data);
+})
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/portfolio_frontend/build/index.html'));
 });
